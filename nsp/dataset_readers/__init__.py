@@ -1,0 +1,1 @@
+# from nsp.dataset_readers.copy_text2sql import CopyNetDatasetReader
