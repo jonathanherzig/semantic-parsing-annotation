@@ -32,3 +32,6 @@ python nsp/run.py --domain domain --version version --embeddings embeddings
 Where the possible values are `domain=['geo', 'scholar']` (the domain to be experimented with), `version=['nat', 'lang', 'granno', 'overnight']`  (the version of the training set - details in the above section), and `embeddings=['glove', 'elmo']` (pre-trained embeddings to be used by the encoder).
 
 The results are written to a log file under the `logs/` folder.
+
+## Grammar output
+The grammar output for both domains, containing canonical utterances and logical forms, can be found in `grammar_output.zip`. These canonical utterances are used as candidates for annotation using GrAnno. 
