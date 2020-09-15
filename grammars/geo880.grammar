@@ -1,0 +1,83 @@
+(include general.grammar)
+
+# Types
+
+(rule $TypeNP (country) (ConstantFn fb:en.country) (_country_ _country_))
+(rule $EntityNP1 (usa) (ConstantFn fb:en.country.usa) (_country_ _country_))
+
+(rule $TypeNP (city) (ConstantFn fb:en.city) (_city_ _city_))
+(rule $EntityNP1 (sacramento) (ConstantFn fb:en.city.sacramento_ca) (_city_ _city_))
+(rule $EntityNP2 (austin) (ConstantFn fb:en.city.austin_tx) (_city_ _city_))
+
+(rule $TypeNP (state) (ConstantFn fb:en.state) (_state_ _state_))
+(rule $EntityNP1 (california) (ConstantFn fb:en.state.california) (_state_ _state_))
+(rule $EntityNP2 (texas) (ConstantFn fb:en.state.texas) (_state_ _state_))
+
+(rule $TypeNP (river) (ConstantFn fb:en.river) (_river_ _river_))
+(rule $EntityNP1 (colorado river) (ConstantFn fb:en.river.colorado) (_river_ _river_))
+(rule $EntityNP2 (red river) (ConstantFn fb:en.river.red) (_river_ _river_))
+
+(rule $TypeNP (lake) (ConstantFn fb:en.lake) (_lake_ _lake_))
+(rule $EntityNP1 (lake tahoe) (ConstantFn fb:en.lake.tahoe) (_lake_ _lake_))
+(rule $EntityNP2 (lake huron) (ConstantFn fb:en.lake.huron) (_lake_ _lake_))
+
+(rule $TypeNP (mountain) (ConstantFn fb:en.mountain) (_mountain_ _mountain_))
+(rule $EntityNP1 (mount whitney) (ConstantFn fb:en.mountain.whitney) (_mountain_ _mountain_))
+(rule $EntityNP2 (mount rainier) (ConstantFn fb:en.mountain.rainier) (_mountain_ _mountain_))
+
+(rule $TypeNP (place) (ConstantFn fb:en.place) (_place_ _place_))
+(rule $EntityNP1 (death valley) (ConstantFn fb:en.place.death_valley) (_place_ _place_))
+(rule $EntityNP2 (pacific ocean) (ConstantFn fb:en.place.pacific_ocean) (_place_ _place_))
+
+# Unaries
+(rule $VP (is major) (ConstantFn (string major_city)) (_city_ _city_))
+(rule $VP (is major) (ConstantFn (string major_river)) (_river_ _river_))
+(rule $VP (is major) (ConstantFn (string major_lake)) (_lake_ _lake_))
+(rule $VP (is a capital) (ConstantFn (string capital_city)) (_city_ _city_))
+
+# Properties
+(rule $VP/NP (is contained by) (ConstantFn (string loc_city_state)) (_state_ _city_))
+(rule $VP/NP (is contained by) (ConstantFn (string loc_lake_state)) (_state_ _lake_))
+(rule $VP/NP (is contained by) (ConstantFn (string loc_mountain_state)) (_state_ _mountain_))
+(rule $VP/NP (is contained by) (ConstantFn (string loc_state_country)) (_country_ _state_))
+(rule $VP/NP (is contained by) (ConstantFn (string loc_place_state)) (_state_ _place_))
+(rule $VP/NP (is contained by) (ConstantFn (string loc_place_city)) (_city_ _place_))
+
+(rule $VP/NP (traverses) (ConstantFn (string traverse_river_state)) (_state_ _river_))
+(rule $VP/NP (traverses) (ConstantFn (string traverse_river_city)) (_city_ _river_))
+(rule $VP/NP (borders) (ConstantFn (string next_to_state_state)) (_state_ _state_))
+(rule $VP/NP (borders) (ConstantFn (string next_to_river_state)) (_state_ _river_))
+
+(rule $RelNP (capital) (ConstantFn (string capital_state_city)) (_state_ _city_))
+(rule $RelNP (area) (ConstantFn (string area_state_length^2)) (_state_ _number_))
+(rule $RelNP (area) (ConstantFn (string area_city_length^2)) (_city_ _number_))
+(rule $RelNP (area) (ConstantFn (string area_country_length^2)) (_country_ _number_))
+(rule $RelNP (area) (ConstantFn (string area_lake_length^2)) (_lake_ _number_))
+(rule $RelNP (length) (ConstantFn (string len_river_length)) (_river_ _number_))
+(rule $RelNP (elevation) (ConstantFn (string elevation_mountain_length)) (_mountain_ _number_))
+(rule $RelNP (elevation) (ConstantFn (string elevation_place_length)) (_place_ _number_))
+(rule $RelNP (population) (ConstantFn (string population_city_count)) (_city_ _number_))
+(rule $RelNP (population) (ConstantFn (string population_state_count)) (_state_ _number_))
+(rule $RelNP (population) (ConstantFn (string population_country_count)) (_country_ _number_))
+(rule $RelNP (density) (ConstantFn (string density_state_count)) (_state_ _number_))
+(rule $RelNP (density) (ConstantFn (string density_city_count)) (_city_ _number_))
+(rule $RelNP (density) (ConstantFn (string density_country_count)) (_country_ _number_))
+(rule $RelNP (low point) (ConstantFn (string low_point_state_place)) (_state_ _place_))
+(rule $RelNP (high point) (ConstantFn (string high_point_state_place)) (_state_ _place_))
+
+# simple lexicon
+#(rule $EntityNP1 ($PHRASE) (SimpleLexiconFn))
+#(rule $EntityNP2 ($PHRASE) (SimpleLexiconFn))
+
+# TODO: named is a funny relation: do we really want to include it?
+# I estimate less than 2% requires the 'name' property, so let's punt
+#(rule $EntityNP1 (sacramento) (ConstantFn (string Sacramento)))
+#(rule $EntityNP1 (california) (ConstantFn (string California)))
+#(rule $EntityNP1 (carson river) (ConstantFn (string Carson River)))
+#(rule $EntityNP1 (lake austin) (ConstantFn (string Lake Austin)))
+#(rule $EntityNP1 (mount whitney) (ConstantFn (string Mount Whitney)))
+
+(rule $EntityNP1 (0) (ConstantFn (number 0 length)) (_number_ _number_))
+(rule $TypeNP (name) (ConstantFn fb:en.name) (_name_ _name_))
+(rule $EntityNP1 (sacramento) (ConstantFn fb:en.name.sacramento) (_name_ _name_))
+(rule $VP/NP (is named) (ConstantFn (string city_name)) (_name_ _city_))

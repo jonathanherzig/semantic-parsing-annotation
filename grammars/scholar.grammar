@@ -1,0 +1,44 @@
+(include general.grammar)
+
+(rule $TypeNP (author) (ConstantFn fb:en.author) (_author_ _author_))
+(rule $EntityNP1 (noah smith) (ConstantFn fb:en.author.noah_smith) (_author_ _author_))
+(rule $EntityNP1 (richard anderson) (ConstantFn fb:en.author.richard_anderson) (_author_ _author_))
+
+(rule $TypeNP (paper) (ConstantFn fb:en.paper) (_paper_ _paper_))
+#(rule $EntityNP1 (paper1) (ConstantFn fb:en.paper.paper1) (_paper_ _paper_))
+
+(rule $TypeNP (keyphrase) (ConstantFn fb:en.keyphrase) (_keyphrase_ _keyphrase_))
+(rule $EntityNP1 (semantic parsing) (ConstantFn fb:en.keyphrase.semantic_parsing) (_keyphrase_ _keyphrase_))
+(rule $EntityNP1 (deep learning) (ConstantFn fb:en.keyphrase.deep_learning) (_keyphrase_ _keyphrase_))
+(rule $RelNP (keyphrase) (ConstantFn (string keyphrase_paper_keyphrase)) (_paper_ _keyphrase_))
+
+(rule $TypeNP (venue) (ConstantFn fb:en.venue) (_venue_ _venue_))
+(rule $EntityNP1 (nature) (ConstantFn fb:en.venue.nature) (_venue_ _venue_))
+(rule $EntityNP1 (acl) (ConstantFn fb:en.venue.acl) (_venue_ _venue_))
+(rule $RelNP (venue) (ConstantFn (string venue_paper_venue)) (_paper_ _venue_))
+
+(rule $TypeNP (journal) (ConstantFn fb:en.journal) (_journal_ _journal_))
+(rule $EntityNP1 (cell) (ConstantFn fb:en.journal.cell) (_journal_ _journal_))
+(rule $RelNP (journal) (ConstantFn (string journal_paper_journal)) (_paper_ _journal_))
+
+(rule $TypeNP (title) (ConstantFn fb:en.title) (_title_ _title_))
+(rule $EntityNP1 (neural attention) (ConstantFn fb:en.title.neural_attention) (_title_ _title_))
+(rule $RelNP (title) (ConstantFn (string title_paper_title)) (_paper_ _title_))
+
+(rule $VP/NP (writes) (ConstantFn (string write_author_paper)) (_paper_ _author_))
+(rule $VP/NP (cites) (ConstantFn (string cites_paper_paper)) (_paper_ _paper_))
+
+#(rule $RelNP (publication date) (ConstantFn (string publication_date_paper_date)) (_paper_ _date_))
+#(rule $EntityNP1 (2012) (ConstantFn (date 2012 -1 -1)) (_date_ _date_))
+(rule $RelNP (publication year) (ConstantFn (string publication_year_paper_number)) (_paper_ _number_))
+(rule $EntityNP1 (2012) (ConstantFn (number 2012 year)) (_number_ _number_))
+#(rule $EntityNP1 (2000) (ConstantFn (number 2000 count)) (_number_ _number_))
+
+(rule $RelNP (citation count) (ConstantFn (string citation_count_paper_number)) (_paper_ _number_))
+(rule $RelNP (citation count) (ConstantFn (string citation_count_author_number)) (_author_ _number_))
+(rule $EntityNP1 (10) (ConstantFn (number 10 count)) (_number_ _number_))
+
+(rule $TypeNP (dataset) (ConstantFn fb:en.dataset) (_dataset_ _dataset_))
+(rule $EntityNP1 (reviews) (ConstantFn fb:en.dataset.reviews) (_dataset_ _dataset_))
+(rule $EntityNP1 (blogs) (ConstantFn fb:en.dataset.blogs) (_dataset_ _dataset_))
+(rule $RelNP (dataset) (ConstantFn (string dataset_paper_dataset)) (_paper_ _dataset_))

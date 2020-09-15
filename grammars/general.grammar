@@ -1,0 +1,58 @@
+(when (and generate general)
+  (rule $ROOT ($NP) (lambda x (call @listValue (var x))) (_any_ _any_))
+  #(rule $ROOT ($NP0) (lambda x (call @listValue (var x))))
+  #(rule $ROOT ($NP1) (lambda x (call @listValue (var x))))
+  #(rule $ROOT ($UnaryNP) (lambda x (call @listValue (var x))))
+
+  (rule $NP ($UnaryNP) (IdentityFn) (_any_ _any_))
+  (rule $NP ($EntityNP1) (IdentityFn) (_any_ _any_))
+  (rule $NP ($RelNP of $NP) (lambda r (lambda s (call @getProperty (var s) (var r)))) (_any_ _any_) (0)) # Tr
+  #(rule $NP ($RelNP of $NPCP) (lambda r (lambda s (call @getProperty (var s) (var r))))) # Tr
+  (rule $NP ($EntityNP1 or $EntityNP1) (lambda n1 (lambda n2 (call @concat (var n1) (var n2)))) (_any_ _any_)) # Tdisj
+
+
+  (rule $NP ($NPCP) (IdentityFn) (_any_ _any_))
+  (rule $NP (number of $NP) (lambda x (call .size (var x))) (_any_ _number_)) # An
+  (rule $NP (total $RelNP of $NP) (lambda r (lambda n (call @aggregate (string sum) (call @getProperty (var n) (var r))))) (_any_ _number_) (0)) # At
+
+  (rule $UnaryNP ($TypeNP) (lambda t (call @getProperty (call @singleton (var t)) (string !type))) (_any_ _any_)) # Unary
+
+  (rule $NPCP ($NPCP and $CP) (JoinFn backward betaReduce) (_any_ _any_))
+  (rule $NPCP ($UnaryNP $CP) (JoinFn backward betaReduce) (_any_ _any_))
+
+  (rule $CP ($CP_FI) (IdentityFn) (_any_ _any_)) # filter
+  (rule $CP_FI (that $VP/NP $NP) (lambda r (lambda n (lambda s (call @filter (var s) (var r) (string =) (var n))))) (_any_ _any_) (0)) # Vobj - that is contained by california
+  (rule $CP_FI (that not $VP/NP $NP) (lambda r (lambda n (lambda s (call @filter (var s) (var r) (string !=) (var n))))) (_any_ _any_) (0)) # Vobj-not
+  (rule $CP_FI (that $NP $VP/NP) (lambda n (lambda r (lambda s (call @filter (var s) (call @reverse (var r)) (string =) (var n))))) (_any_ _any_) (1)) # Vsubj
+  (rule $CP_FI (that $NP not $VP/NP) (lambda n (lambda r (lambda s (call @filter (var s) (call @reverse (var r)) (string !=) (var n))))) (_any_ _any_) (1)) # Vsubj-not
+  (rule $CP_FI (that $VP) (lambda r (lambda s (call @filter (var s) (var r)))) (_any_ _any_)) # Vunary - that is major
+  (rule $CP_FI (that is     $RelNP of $NP) (lambda r (lambda n (lambda s (call @filter (var s) (call @reverse (var r)) (string =) (var n))))) (_any_ _any_) (0)) # Reqrev - that is low point of california
+
+  (rule $CP ($CP_EQ) (IdentityFn) (_any_ _any_)) # is equal
+  (rule $CP_EQ (whose $RelNP is              $NP) (lambda r (lambda n (lambda s (call @filter (var s) (var r) (string =)  (var n))))) (_any_ _any_) (0)) # Req
+  (rule $CP_EQ (whose $RelNP is not          $NP) (lambda r (lambda n (lambda s (call @filter (var s) (var r) (string !=) (var n))))) (_any_ _any_) (0)) # Rnot
+
+  (rule $CP ($CP_CM) (IdentityFn) (_any_ _any_)) # comparatives
+  ##(rule $CP_CM (whose $NumberRelNP is larger than $NP) (lambda r (lambda n (lambda s (call @filter (var s) (var r) (string >) (var n))))) (_any_ _any_) (0)) # Rg
+  ##(rule $CP_CM (whose $NumberRelNP is smaller than $NP) (lambda r (lambda n (lambda s (call @filter (var s) (var r) (string <)  (var n))))) (_any_ _any_) (0)) # Rl
+  (rule $CP_CM (whose $RelNP is larger than $NP) (lambda r (lambda n (lambda s (call @filter (var s) (var r) (string >) (var n))))) (_any_ _any_) (0)) # Rg
+  (rule $CP_CM (whose $RelNP is smaller than $NP) (lambda r (lambda n (lambda s (call @filter (var s) (var r) (string <)  (var n))))) (_any_ _any_) (0)) # Rl
+
+  (rule $CP ($CP_SU) (IdentityFn) (_any_ _any_)) # superlatives
+  #(rule $CP_SU (that has the largest $NumberRelNP) (lambda r (lambda s (call @superlative (var s) (string max) (var r))))) # Smax
+  #(rule $CP_SU (that has the smallest $NumberRelNP) (lambda r (lambda s (call @superlative (var s) (string min) (var r))))) # Smin
+  (rule $CP_SU (that has the largest $RelNP) (lambda r (lambda s (call @superlative (var s) (string max) (var r)))) (_any_ _any_)) # Smax
+  (rule $CP_SU (that has the smallest $RelNP) (lambda r (lambda s (call @superlative (var s) (string min) (var r)))) (_any_ _any_)) # Smin
+  #(rule $CP_SU (that $VP/NP the most  number of $UnaryNP) (lambda r (lambda s2 (lambda s1 (call @countSuperlative (var s1) (string max) (var r) (var s2))))) (_any_ _any_) (0)) # Scvmax
+  #(rule $CP_SU (that $VP/NP the least number of $UnaryNP) (lambda r (lambda s2 (lambda s1 (call @countSuperlative (var s1) (string min) (var r) (var s2))))) (_any_ _any_) (0)) # Scvmin
+  (rule $CP_SU (that $VP/NP the most  number of $NP) (lambda r (lambda s2 (lambda s1 (call @countSuperlative (var s1) (string max) (var r) (var s2))))) (_any_ _any_) (0)) # Scvmax
+  (rule $CP_SU (that $VP/NP the least number of $NP) (lambda r (lambda s2 (lambda s1 (call @countSuperlative (var s1) (string min) (var r) (var s2))))) (_any_ _any_) (0)) # Scvmin
+  (rule $CP_SU (that the most  number of $NP $VP/NP) (lambda np (lambda r (lambda s (call @countSuperlative (var s) (string max) (call @reverse (var r)) (var np))))) (_any_ _any_) (1)) # Scvmax
+  (rule $CP_SU (that the least number of $NP $VP/NP) (lambda np (lambda r (lambda s (call @countSuperlative (var s) (string min) (call @reverse (var r)) (var np))))) (_any_ _any_) (1)) # Scvmin
+  (rule $CP_SU (that is $RelNP of the most  number of $NP) (lambda r (lambda np (lambda s (call @countSuperlative (var s) (string max) (call @reverse (var r)) (var np))))) (_any_ _any_) (0)) # Scmax
+  (rule $CP_SU (that is $RelNP of the least number of $NP) (lambda r (lambda np (lambda s (call @countSuperlative (var s) (string min) (call @reverse (var r)) (var np))))) (_any_ _any_) (0)) # Scmin
+
+  #(rule $NumberRelNP ($RelNP) (lambda r (call @ensureNumericProperty (var r))) (_any_ _number_))
+  ##(rule $NumberNP ($NP) (lambda r (call @ensureNumericEntity (var r))))
+
+)
