@@ -1,0 +1,46 @@
+write_author_paper	fb:en.author.richard_anderson	fb:en.paper.paper1
+write_author_paper	fb:en.author.richard_anderson	fb:en.paper.paper5
+write_author_paper	fb:en.author.noah_smith	fb:en.paper.paper2
+write_author_paper	fb:en.author.noah_smith	fb:en.paper.paper3
+write_author_paper	fb:en.author.noah_smith	fb:en.paper.paper4
+write_author_paper	fb:en.author.noah_smith	fb:en.paper.paper5
+write_author_paper	fb:en.author.jeff_dean	fb:en.paper.paper5
+write_author_paper	fb:en.author.richard_anderson	fb:en.paper.paper5
+keyphrase_paper_keyphrase	fb:en.paper.paper4	fb:en.keyphrase.deep_learning
+keyphrase_paper_keyphrase	fb:en.paper.paper4	fb:en.keyphrase.semantic_parsing
+keyphrase_paper_keyphrase	fb:en.paper.paper5	fb:en.keyphrase.semantic_parsing
+keyphrase_paper_keyphrase	fb:en.paper.paper5	fb:en.keyphrase.deep_learning
+keyphrase_paper_keyphrase	fb:en.paper.paper1	fb:en.keyphrase.deep_learning
+keyphrase_paper_keyphrase	fb:en.paper.paper2	fb:en.keyphrase.deep_learning
+venue_paper_venue	fb:en.paper.paper4	fb:en.venue.nature
+venue_paper_venue	fb:en.paper.paper5	fb:en.venue.naacl
+venue_paper_venue	fb:en.paper.paper1	fb:en.venue.acl
+venue_paper_venue	fb:en.paper.paper2	fb:en.venue.acl
+venue_paper_venue	fb:en.paper.paper1	fb:en.venue.nature
+publication_year_paper_number	fb:en.paper.paper5	(number 2016 year)
+publication_year_paper_number	fb:en.paper.paper4	(number 2012 year)
+publication_year_paper_number	fb:en.paper.paper2	(number 2008 year)
+publication_year_paper_number	fb:en.paper.paper3	(number 2009 year)
+publication_year_paper_number	fb:en.paper.paper1	(number 2012 year)
+citation_count_paper_number	fb:en.paper.paper5	(number 5 count)
+citation_count_paper_number	fb:en.paper.paper4	(number 10 count)
+citation_count_paper_number	fb:en.paper.paper2	(number 7 count)
+citation_count_paper_number	fb:en.paper.paper3	(number 100 count)
+citation_count_paper_number	fb:en.paper.paper1	(number 25 count)
+citation_count_author_number	fb:en.author.noah_smith	(number 7 count)
+citation_count_author_number	fb:en.author.jeff_dean	(number 100 count)
+citation_count_author_number	fb:en.author.richard_anderson	(number 25 count)
+dataset_paper_dataset	fb:en.paper.paper4	fb:en.dataset.reviews
+dataset_paper_dataset	fb:en.paper.paper2	fb:en.dataset.reviews
+dataset_paper_dataset	fb:en.paper.paper5	fb:en.dataset.blogs
+dataset_paper_dataset	fb:en.paper.paper1	fb:en.dataset.blogs
+journal_paper_journal	fb:en.paper.paper4	fb:en.journal.cell
+journal_paper_journal	fb:en.paper.paper5	fb:en.journal.cell
+journal_paper_journal	fb:en.paper.paper1	fb:en.journal.tacl
+title_paper_title	fb:en.paper.paper4	fb:en.title.neural_attention
+title_paper_title	fb:en.paper.paper5	fb:en.title.language_models
+title_paper_title	fb:en.paper.paper1	fb:en.title.neural_attention
+cites_paper_paper	fb:en.paper.paper4	fb:en.paper.paper5
+cites_paper_paper	fb:en.paper.paper5	fb:en.paper.paper5
+cites_paper_paper	fb:en.paper.paper1	fb:en.paper.paper4
+cites_paper_paper	fb:en.paper.paper2	fb:en.paper.paper4

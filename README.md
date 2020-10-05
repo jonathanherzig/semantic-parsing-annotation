@@ -33,5 +33,16 @@ Where the possible values are `domain=['geo', 'scholar']` (the domain to be expe
 
 The results are written to a log file under the `logs/` folder.
 
+## Generating from the grammar
+
+You can use the grammar to generate `(canonical_utterance, logical_form)` pairs exhaustively up to some maximal depth. The generation procedure runs recursively, top-down, while pruning some nonsensical structures during generation, and also after generation is terminated. The number of generated examples should match Table 2 in the paper.
+
+To generate from the grammar, run:
+```
+python grammar_generation/grammar_gen.py --domain domain --name name --max_depth max_depth
+``` 
+
+Where the possible domains are `domain=['geo', 'scholar']` (the domain for which to generate), `name` is the name of the output (to be generated under `grammar_generation` folder), and `max_depth` is the maximal tree depth that would be generated (if >7 expect running time to blow up given current implementation).
+
 ## Grammar output
-The grammar output for both domains, containing canonical utterances and logical forms, can be found in `grammar_output.zip`. These canonical utterances are used as candidates for annotation using GrAnno. 
+The grammar output for both domains, containing canonical utterances and logical forms, can be found in `grammar_output.zip`. These canonical utterances are used as candidates for annotation using GrAnno, and match the outputs for a maximum tree depth of 6 reported in the paper.
